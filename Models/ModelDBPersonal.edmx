@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbpersonalModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_personal">
+          <Key>
+            <PropertyRef Name="ID_PERSONAL" />
+          </Key>
+          <Property Name="ID_PERSONAL" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE_COMPLETO" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CEDULA" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="date" Nullable="false" />
+          <Property Name="ID_PROFESION" Type="utinyint" Nullable="false" />
+          <Property Name="DIRECCION" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MUNICIPIO" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TELEFONO" Type="varchar" MaxLength="15" />
+          <Property Name="SEXO" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ID_VEHICULO" Type="utinyint" />
+          <Property Name="MARCA" Type="varchar" MaxLength="20" />
+          <Property Name="MODELO" Type="uint" />
+        </EntityType>
+        <EntityType Name="tbl_profesion">
+          <Key>
+            <PropertyRef Name="ID_PROFESION" />
+          </Key>
+          <Property Name="ID_PROFESION" Type="utinyint" Nullable="false" />
+          <Property Name="PROFESION" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_vehiculos">
+          <Key>
+            <PropertyRef Name="ID_VEHICULO" />
+          </Key>
+          <Property Name="ID_VEHICULO" Type="utinyint" Nullable="false" />
+          <Property Name="VEHICULO" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tbl_profesion">
+          <End Role="tbl_profesion" Type="Self.tbl_profesion" Multiplicity="1" />
+          <End Role="tbl_personal" Type="Self.tbl_personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_profesion">
+              <PropertyRef Name="ID_PROFESION" />
+            </Principal>
+            <Dependent Role="tbl_personal">
+              <PropertyRef Name="ID_PROFESION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_vehiculos">
+          <End Role="tbl_vehiculos" Type="Self.tbl_vehiculos" Multiplicity="0..1" />
+          <End Role="tbl_personal" Type="Self.tbl_personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vehiculos">
+              <PropertyRef Name="ID_VEHICULO" />
+            </Principal>
+            <Dependent Role="tbl_personal">
+              <PropertyRef Name="ID_VEHICULO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbpersonalModelStoreContainer">
+          <EntitySet Name="tbl_personal" EntityType="Self.tbl_personal" Schema="dbpersonal" store:Type="Tables" />
+          <EntitySet Name="tbl_profesion" EntityType="Self.tbl_profesion" Schema="dbpersonal" store:Type="Tables" />
+          <EntitySet Name="tbl_vehiculos" EntityType="Self.tbl_vehiculos" Schema="dbpersonal" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_profesion" Association="Self.FK__tbl_profesion">
+            <End Role="tbl_profesion" EntitySet="tbl_profesion" />
+            <End Role="tbl_personal" EntitySet="tbl_personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_vehiculos" Association="Self.FK__tbl_vehiculos">
+            <End Role="tbl_vehiculos" EntitySet="tbl_vehiculos" />
+            <End Role="tbl_personal" EntitySet="tbl_personal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbpersonalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_personal">
+          <Key>
+            <PropertyRef Name="ID_PERSONAL" />
+          </Key>
+          <Property Name="ID_PERSONAL" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE_COMPLETO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CEDULA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FECHA_NACIMIENTO" Type="DateTime" Nullable="false" />
+          <Property Name="ID_PROFESION" Type="Byte" Nullable="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MUNICIPIO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFONO" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="SEXO" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_VEHICULO" Type="Byte" />
+          <Property Name="MARCA" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MODELO" Type="Int64" />
+          <NavigationProperty Name="tbl_profesion" Relationship="Self.FK__tbl_profesion" FromRole="tbl_personal" ToRole="tbl_profesion" />
+          <NavigationProperty Name="tbl_vehiculos" Relationship="Self.FK__tbl_vehiculos" FromRole="tbl_personal" ToRole="tbl_vehiculos" />
+        </EntityType>
+        <EntityType Name="tbl_profesion">
+          <Key>
+            <PropertyRef Name="ID_PROFESION" />
+          </Key>
+          <Property Name="ID_PROFESION" Type="Byte" Nullable="false" />
+          <Property Name="PROFESION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_personal" Relationship="Self.FK__tbl_profesion" FromRole="tbl_profesion" ToRole="tbl_personal" />
+        </EntityType>
+        <EntityType Name="tbl_vehiculos">
+          <Key>
+            <PropertyRef Name="ID_VEHICULO" />
+          </Key>
+          <Property Name="ID_VEHICULO" Type="Byte" Nullable="false" />
+          <Property Name="VEHICULO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_personal" Relationship="Self.FK__tbl_vehiculos" FromRole="tbl_vehiculos" ToRole="tbl_personal" />
+        </EntityType>
+        <Association Name="FK__tbl_profesion">
+          <End Role="tbl_profesion" Type="Self.tbl_profesion" Multiplicity="1" />
+          <End Role="tbl_personal" Type="Self.tbl_personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_profesion">
+              <PropertyRef Name="ID_PROFESION" />
+            </Principal>
+            <Dependent Role="tbl_personal">
+              <PropertyRef Name="ID_PROFESION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_vehiculos">
+          <End Role="tbl_vehiculos" Type="Self.tbl_vehiculos" Multiplicity="0..1" />
+          <End Role="tbl_personal" Type="Self.tbl_personal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_vehiculos">
+              <PropertyRef Name="ID_VEHICULO" />
+            </Principal>
+            <Dependent Role="tbl_personal">
+              <PropertyRef Name="ID_VEHICULO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbpersonalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_personal" EntityType="Self.tbl_personal" />
+          <EntitySet Name="tbl_profesion" EntityType="Self.tbl_profesion" />
+          <EntitySet Name="tbl_vehiculos" EntityType="Self.tbl_vehiculos" />
+          <AssociationSet Name="FK__tbl_profesion" Association="Self.FK__tbl_profesion">
+            <End Role="tbl_profesion" EntitySet="tbl_profesion" />
+            <End Role="tbl_personal" EntitySet="tbl_personal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_vehiculos" Association="Self.FK__tbl_vehiculos">
+            <End Role="tbl_vehiculos" EntitySet="tbl_vehiculos" />
+            <End Role="tbl_personal" EntitySet="tbl_personal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbpersonalModelStoreContainer" CdmEntityContainer="dbpersonalEntities">
+          <EntitySetMapping Name="tbl_personal">
+            <EntityTypeMapping TypeName="dbpersonalModel.tbl_personal">
+              <MappingFragment StoreEntitySet="tbl_personal">
+                <ScalarProperty Name="ID_PERSONAL" ColumnName="ID_PERSONAL" />
+                <ScalarProperty Name="NOMBRE_COMPLETO" ColumnName="NOMBRE_COMPLETO" />
+                <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
+                <ScalarProperty Name="FECHA_NACIMIENTO" ColumnName="FECHA_NACIMIENTO" />
+                <ScalarProperty Name="ID_PROFESION" ColumnName="ID_PROFESION" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="MUNICIPIO" ColumnName="MUNICIPIO" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="SEXO" ColumnName="SEXO" />
+                <ScalarProperty Name="ID_VEHICULO" ColumnName="ID_VEHICULO" />
+                <ScalarProperty Name="MARCA" ColumnName="MARCA" />
+                <ScalarProperty Name="MODELO" ColumnName="MODELO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_profesion">
+            <EntityTypeMapping TypeName="dbpersonalModel.tbl_profesion">
+              <MappingFragment StoreEntitySet="tbl_profesion">
+                <ScalarProperty Name="ID_PROFESION" ColumnName="ID_PROFESION" />
+                <ScalarProperty Name="PROFESION" ColumnName="PROFESION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_vehiculos">
+            <EntityTypeMapping TypeName="dbpersonalModel.tbl_vehiculos">
+              <MappingFragment StoreEntitySet="tbl_vehiculos">
+                <ScalarProperty Name="ID_VEHICULO" ColumnName="ID_VEHICULO" />
+                <ScalarProperty Name="VEHICULO" ColumnName="VEHICULO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
